@@ -1,0 +1,21 @@
+// Docs: https://dbml.dbdiagram.io/docs
+
+Table posts {
+  id integer [primary key]
+  title varchar
+  text varchar
+  user_id integer
+  creation_time timestamp
+}
+
+Table comments {
+  id integer [primary key]
+  text varchar
+  user_id integer
+  post_id integer
+  reply_id integer
+  creation_time timestamp
+}
+
+Ref: comments.post_id > posts.id
+Ref: comments.reply_id > comments.id
