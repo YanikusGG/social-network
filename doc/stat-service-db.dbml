@@ -1,0 +1,27 @@
+// Docs: https://dbml.dbdiagram.io/docs
+
+Table posts_stat {
+  post_id integer [primary key]
+  views integer
+  likes integer
+}
+
+Table users_stat {
+  user_id integer [primary key]
+  views_done integer
+  likes_done integer
+  views_got integer
+  likes_got integer
+}
+
+Table actions {
+  user_id integer [primary key]
+  post_id integer [primary key]
+  author_id intger
+  view bool
+  like bool
+}
+
+Ref: actions.post_id > posts_stat.post_id
+Ref: actions.user_id > users_stat.user_id
+Ref: actions.author_id > users_stat.user_id

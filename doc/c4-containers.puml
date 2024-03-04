@@ -1,0 +1,37 @@
+@startuml C4-containers
+
+!include https://raw.githubusercontent.com/plantuml-stdlib/C4-PlantUML/master/C4_Container.puml
+
+Person(user, "Пользователь", "Пользователь социальной сети")
+
+System(website, "Сайт", "Социальная сеть")
+Rel(user, website, "Управляет своей стеной, оставляет комментарии")
+
+Container(frontend, "Фронтенд", "Angular", "Фронтенд часть сайта")
+Rel(website, frontend, "Использует для отображения")
+
+System_Boundary(backend, "Бекенд") {
+    Container(api, "API", "Python", "Клиентское API, аутентификация пользователя")
+    Container(stat_service, "StatService", "Golang", "Сервис статистики для подсчета лайков и просмотров")
+    Container(social_engine, "SocialEngine", "Python", "Сервис постов и комментариев")
+
+    Container(api_db, "БД (Api)", "PostgreSQL", "Хранит пользователей")
+    Container(stat_service_db, "БД (StatService)", "ClickHouse", "Хранит статистику по лайкам и просмотрам")
+    Container(social_engine_db, "БД (SocialEngine)", "PostgreSQL", "Хранит посты и комментарии")
+
+    Rel(api, api_db, "Записывает/читает состояние")
+    Rel(stat_service, stat_service_db, "Записывает/читает состояние")
+    Rel(social_engine, social_engine_db, "Записывает/читает состояние")
+
+    Container(stat_broker, "StatBroker", "Kafka", "Брокер сообщений о лайках и просмотрах")
+
+    Rel(stat_broker, stat_service, "Выдаёт новое сообщение", "Сообщение")
+
+    Rel(frontend, api, "Ходит в API", "REST")
+
+    Rel(api, social_engine, "Обновляет/ищет посты и комментарии", "gRPC")
+    Rel(api, stat_service, "Получает статистику", "gRPC")
+    Rel(api, stat_broker, "Отправляет сообщение о лайках и просмотрах", "Сообщение")
+}
+
+@enduml
