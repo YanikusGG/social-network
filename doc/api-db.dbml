@@ -5,4 +5,16 @@ Table users {
   username varchar
   password varchar
   creation_time timestamp
+  first_name varchar
+  second_name varchar
+  birth_date varchar
+  email varchar
+  phone_number varchar
+}
+
+Table sessions {
+  id integer [primary key]
+  username varchar
+  secret varchar
+  creation_time timestamp
 }

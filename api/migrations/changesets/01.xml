@@ -1,0 +1,50 @@
+<databaseChangeLog
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext"
+    xmlns:pro="http://www.liquibase.org/xml/ns/pro"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd
+        http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd
+        http://www.liquibase.org/xml/ns/pro http://www.liquibase.org/xml/ns/pro/liquibase-pro-latest.xsd">
+
+    <changeSet author="yan.anikiev" id="create-users-table">
+        <createTable tableName="users" remarks="info about users">
+            <column autoIncrement="true" name="id" type="INTEGER" remarks="id">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="users_pkey"/>
+            </column>
+            <column name="username" type="VARCHAR">
+                <constraints nullable="false"/>
+            </column>
+            <column name="password" type="VARCHAR">
+                <constraints nullable="false"/>
+            </column>
+            <column name="creation_time" type="TIMESTAMP">
+                <constraints nullable="false"/>
+            </column>
+            <column name="first_name" type="VARCHAR"></column>
+            <column name="second_name" type="VARCHAR"></column>
+            <column name="birth_date" type="VARCHAR"></column>
+            <column name="email" type="VARCHAR"></column>
+            <column name="phone_number" type="VARCHAR"></column>
+        </createTable>
+    </changeSet>
+
+    <changeSet author="yan.anikiev" id="create-sessions-table">
+        <createTable tableName="sessions" remarks="info about sessions">
+            <column autoIncrement="true" name="id" type="INTEGER" remarks="id">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="sessions_pkey"/>
+            </column>
+            <column name="username" type="VARCHAR">
+                <constraints nullable="false"/>
+            </column>
+            <column name="secret" type="VARCHAR">
+                <constraints nullable="false"/>
+            </column>
+            <column name="creation_time" type="TIMESTAMP">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+
+</databaseChangeLog>
