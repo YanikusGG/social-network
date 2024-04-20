@@ -1,0 +1,192 @@
+openapi: 3.1.0
+info:
+  title: FastAPI
+  version: 0.1.0
+paths:
+  /docs:
+    get:
+      summary: Read Docs
+      description: get swagger documentation html
+      operationId: read_docs_docs_get
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema: {}
+  /auth/signup:
+    post:
+      summary: Create User
+      description: create new user with given data
+      operationId: create_user_auth_signup_post
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/RegistrationInput'
+        required: true
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema: {}
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+  /auth/update:
+    post:
+      summary: Update User
+      description: update user with given data
+      operationId: update_user_auth_update_post
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UserUpdateInput'
+        required: true
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema: {}
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+  /auth/signin:
+    post:
+      summary: Create Session
+      description: create new session with given data and return secret
+      operationId: create_session_auth_signin_post
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AuthInput'
+        required: true
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema: {}
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+components:
+  schemas:
+    AuthInput:
+      properties:
+        username:
+          type: string
+          title: Username
+        password:
+          type: string
+          title: Password
+      type: object
+      required:
+        - username
+        - password
+      title: AuthInput
+    HTTPValidationError:
+      properties:
+        detail:
+          items:
+            $ref: '#/components/schemas/ValidationError'
+          type: array
+          title: Detail
+      type: object
+      title: HTTPValidationError
+    RegistrationInput:
+      properties:
+        username:
+          type: string
+          title: Username
+        password:
+          type: string
+          title: Password
+        first_name:
+          type: string
+          title: First Name
+        second_name:
+          type: string
+          title: Second Name
+        birth_date:
+          type: string
+          title: Birth Date
+        email:
+          type: string
+          title: Email
+        phone_number:
+          type: string
+          title: Phone Number
+      type: object
+      required:
+        - username
+        - password
+        - first_name
+        - second_name
+        - birth_date
+        - email
+        - phone_number
+      title: RegistrationInput
+    UserUpdateInput:
+      properties:
+        secret:
+          type: string
+          title: Secret
+        first_name:
+          type: string
+          title: First Name
+        second_name:
+          type: string
+          title: Second Name
+        birth_date:
+          type: string
+          title: Birth Date
+        email:
+          type: string
+          title: Email
+        phone_number:
+          type: string
+          title: Phone Number
+      type: object
+      required:
+        - secret
+        - first_name
+        - second_name
+        - birth_date
+        - email
+        - phone_number
+      title: UserUpdateInput
+    ValidationError:
+      properties:
+        loc:
+          items:
+            anyOf:
+              - type: string
+              - type: integer
+          type: array
+          title: Location
+        msg:
+          type: string
+          title: Message
+        type:
+          type: string
+          title: Error Type
+      type: object
+      required:
+        - loc
+        - msg
+        - type
+      title: ValidationError
