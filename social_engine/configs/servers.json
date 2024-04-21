@@ -1,11 +1,11 @@
 {
     "Servers": {
         "1": {
-            "Name": "SocialApiService",
+            "Name": "SocialEngineService",
             "Group": "Servers",
-            "Port": 5432,
+            "Port": 5433,
             "Username": "postgres",
-            "Host": "api-postgresql",
+            "Host": "social-engine-postgresql",
             "SSLMode": "disable",
             "MaintenanceDB": "postgres",
             "PassFile": "/var/lib/pgadmin/pgpass"
