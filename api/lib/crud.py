@@ -4,7 +4,6 @@ from typing import Any
 
 from sqlalchemy.orm import Session
 from fastapi import HTTPException, status
-from pydantic import BaseModel
 
 from . import models, schemas
 
@@ -55,7 +54,7 @@ class RepositoryBase:
 
         return deleted_count
 
-    def add_one(self, model: BaseModel):
+    def add_one(self, model: Any):
         assert type(model) == self._model_class
 
         self._db.add(model)
@@ -102,6 +101,9 @@ class UsersRepository(RepositoryBase):
         db_user = self.get_one(auth.username)
 
         return db_user.password == get_password_hash(auth.username, auth.password)
+    
+    def get_id_by_username(self, username: str):
+        return self.get_one(username).id
 
 
 class SessionsRepository(RepositoryBase):

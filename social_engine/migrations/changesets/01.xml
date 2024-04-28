@@ -1,0 +1,51 @@
+<databaseChangeLog
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext"
+    xmlns:pro="http://www.liquibase.org/xml/ns/pro"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd
+        http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd
+        http://www.liquibase.org/xml/ns/pro http://www.liquibase.org/xml/ns/pro/liquibase-pro-latest.xsd">
+
+    <changeSet author="yan.anikiev" id="create-posts-table">
+        <createTable tableName="posts" remarks="info about posts">
+            <column autoIncrement="true" name="id" type="INTEGER" remarks="id">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="posts_pkey"/>
+            </column>
+            <column name="title" type="VARCHAR"></column>
+            <column name="text" type="VARCHAR"></column>
+            <column name="user_id" type="INTEGER">
+                <constraints nullable="false"/>
+            </column>
+            <column name="creation_time" type="TIMESTAMP">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+
+    <changeSet author="yan.anikiev" id="create-comments-table">
+        <createTable tableName="comments" remarks="info about comments">
+            <column autoIncrement="true" name="id" type="INTEGER" remarks="id">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="commentspkey"/>
+            </column>
+            <column name="text" type="VARCHAR"></column>
+            <column name="user_id" type="INTEGER">
+                <constraints nullable="false"/>
+            </column>
+            <column name="post_id" type="INTEGER">
+                <constraints nullable="false"/>
+            </column>
+            <column name="reply_id" type="INTEGER"></column>
+            <column name="creation_time" type="TIMESTAMP">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+
+    <changeSet author="yan.anikiev" id="create-foreign-keys">
+        <addForeignKeyConstraint baseColumnNames="post_id" baseTableName="comments" constraintName="comments_post_id_fk" referencedColumnNames="id" referencedTableName="posts"/>
+        <addForeignKeyConstraint baseColumnNames="reply_id" baseTableName="comments" constraintName="comments_reply_id_fk" referencedColumnNames="id" referencedTableName="comments"/>
+    </changeSet>
+
+</databaseChangeLog>
